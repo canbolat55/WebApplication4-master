@@ -1,0 +1,89 @@
+/* Tüm elemanlardaki border'ý kaldýrýr */
+* {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sayfa genel düzeni */
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.mid-class {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Her iki formun eþit boyutta olmasýný saðla */
+.art-right-w3ls, .art-left-w3ls {
+    width: 48%; /* Yarý geniþlikte */
+    box-sizing: border-box;
+}
+
+    /* Giriþ formu düzeni */
+    .art-right-w3ls h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+/* Giriþ formu input alanlarýnýn boyutlarýný büyütme */
+.form-left-to-w3l input {
+    width: 100%;
+    padding: 15px; /* Daha fazla iç boþluk */
+    margin: 10px 0; /* Daha fazla dýþ boþluk */
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Bilet alma formu düzeni */
+.ticket-form {
+    margin-top: 30px;
+}
+
+    .ticket-form select,
+    .ticket-form input {
+        width: 100%;
+        padding: 15px; /* Daha fazla iç boþluk */
+        margin: 10px 0; /* Daha fazla dýþ boþluk */
+        font-size: 18px; /* Yazý boyutunu büyütme */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .ticket-form .city-select {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .ticket-form .city-select select {
+            width: 48%;
+        }
+
+        .ticket-form .city-select span {
+            align-self: center;
+            font-size: 20px;
+        }
+
+/* Diðer butonlar ve genel stil */
+.btnn button {
+    padding: 15px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Bilet al formu baþlýðý */
+.ticket-form h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
