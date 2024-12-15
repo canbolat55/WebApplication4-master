@@ -17,19 +17,17 @@
         }
 
         /* Navbar */
-        /* Navbar düzeni */
         .navbar {
             background-color: #333;
             padding: 10px;
             display: flex;
-            justify-content: space-between; /* Logo ve bağlantıları ayırır */
-            align-items: center; /* Dikeyde ortalar */
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Navbar linkleri kısmı */
         .navbar-links {
             display: flex;
-            align-items: center; /* Linkleri yatayda hizalar */
+            align-items: center;
         }
 
         .navbar a {
@@ -41,7 +39,6 @@
             .navbar a:hover {
                 color: #FFD700;
             }
-
 
         /* Şehir seçme kısmı */
         .city-select-container {
@@ -55,10 +52,10 @@
             width: 200px;
             padding: 10px;
             border: 2px solid #333;
-            border-radius: 50px; /* Oval şekil */
+            border-radius: 50px;
             text-align: center;
             font-size: 16px;
-            background-color: #FFD700; /* Sarı renk */
+            background-color: #FFD700;
             color: #333;
             margin: 0 10px;
         }
@@ -124,7 +121,7 @@
             padding: 10px 20px;
             cursor: pointer;
             border: none;
-            width: 100%; /* Düğmenin tam genişlikte olması için */
+            width: 100%;
         }
 
             #journeyDate:hover {
@@ -162,25 +159,20 @@
             }
 
         /* Datepicker Butonları */
+        /* Datepicker konumunu belirleyelim */
         .datepicker {
-            width: 100%;
-        }
-
-        /* Simge Seçildiğinde Boyama */
-        .icon-select {
-            color: #333;
+            z-index: 9999 !important; /* Diğer öğelerin üzerine çıkmasını sağlar */
         }
 
         .icon-item.selected .icon-select {
-            color: #FFD700; /* Sarı renge dönsün */
+            color: #FFD700;
         }
 
         .logo {
-            width: 95px; /* Logonun genişliği */
-            height: auto; /* Yüksekliği otomatik yapar */
-            opacity: 0.8; /* Şeffaflık ekler */
+            width: 95px;
+            height: auto;
+            opacity: 0.8;
         }
-
     </style>
 </head>
 <body>
@@ -191,49 +183,69 @@
             <img src="images/logo.jpg" alt="Logo" class="logo">
         </a>
         <div class="navbar-links">
-            <!-- Hakkımızda bağlantısını güncelledik -->
             <a href="@Url.Action("Hakkimizda", "Custom")">Hakkımızda</a>
-
             <a href="#" data-bs-toggle="modal" data-bs-target="#authModal">Üye Girişi</a>
         </div>
     </div>
 
-
-    <!-- Şehir ve Tarih Seçimi -->
     <div class="container">
         <h4 class="text-center mt-4">Bilet Satın Alma İşlemi</h4>
 
-        <div class="city-select-container">
-            <!-- Şehir seçme input -->
-            <input type="text" id="fromCityInput" class="city-select" placeholder="Başlangıç Şehri" onkeyup="filterCities('fromCity')" />
-            <div class="city-suggestions" id="fromCitySuggestions"></div>
+        <!-- Otobüs Arama Bölümü -->
+        <div id="busSearchSection" style="display: none;">
+            <div class="city-select-container">
+                <input type="text" id="fromCityInput" class="city-select" placeholder="Başlangıç Şehri" onkeyup="filterCities('fromCity')" />
+                <div class="city-suggestions" id="fromCitySuggestions"></div>
 
-            <div class="swap-btn">
-                <i class="fas fa-exchange-alt" id="swapCities"></i>
+                <div class="swap-btn">
+                    <i class="fas fa-exchange-alt" id="swapCities"></i>
+                </div>
+
+                <input type="text" id="toCityInput" class="city-select" placeholder="Varış Şehri" onkeyup="filterCities('toCity')" />
+                <div class="city-suggestions" id="toCitySuggestions"></div>
             </div>
 
-            <!-- Şehir seçme input -->
-            <input type="text" id="toCityInput" class="city-select" placeholder="Varış Şehri" onkeyup="filterCities('toCity')" />
-            <div class="city-suggestions" id="toCitySuggestions"></div>
+            <div class="container mt-5">
+                <label for="journeyDate" class="form-label">Gidiş Tarihi</label>
+                <input type="text" id="journeyDate" class="form-control" placeholder="Tarih Seçiniz" readonly />
+            </div>
         </div>
 
-        <!-- Gidiş Tarihi Seçimi -->
-        <div class="container mt-5">
-            <label for="journeyDate" class="form-label">Gidiş Tarihi</label>
-            <input type="text" id="journeyDate" class="form-control" placeholder="Tarih Seçiniz" readonly />
+        <!-- Otel Arama Bölümü -->
+        <div id="hotelSearchSection" style="display: none;">
+            <div class="city-select-container">
+                <input type="text" id="hotelCityInput" class="city-select" placeholder="Şehir Seçiniz" onkeyup="filterCities('hotelCity')" />
+                <div class="city-suggestions" id="hotelCitySuggestions"></div>
+            </div>
+
+            <div class="container mt-5">
+                <label for="checkInDate" class="form-label">Giriş Tarihi</label>
+                <input type="text" id="checkInDate" class="form-control" placeholder="Giriş Tarihi Seçiniz" readonly />
+            </div>
+
+            <div class="container mt-3">
+                <label for="checkOutDate" class="form-label">Dönüş Tarihi</label>
+                <input type="text" id="checkOutDate" class="form-control" placeholder="Dönüş Tarihi Seçiniz" readonly />
+            </div>
+
+            <div class="container mt-3">
+                <label for="guestCount" class="form-label">Kişi Sayısı</label>
+                <input type="number" id="guestCount" class="form-control" placeholder="Kişi Sayısını Giriniz" min="1" />
+            </div>
+
+            <div class="container mt-3">
+                <label for="roomCount" class="form-label">Oda Sayısı</label>
+                <input type="number" id="roomCount" class="form-control" placeholder="Oda Sayısını Giriniz" min="1" />
+            </div>
         </div>
 
-        <!-- Seçilebilir İkonlar -->
+        <!-- İkon Seçim Alanı -->
         <div class="icon-select-container">
-            <div class="icon-item" id="busIcon">
+            <div class="icon-item" id="busIcon" onclick="showSection('bus')">
                 <i class="fas fa-bus icon-select"></i>
                 <span>Otobüs</span>
             </div>
-            <div class="icon-item" id="planeIcon">
-                <i class="fas fa-plane icon-select"></i>
-                <span>Uçak</span>
-            </div>
-            <div class="icon-item" id="hotelIcon">
+            <div class="icon-item" id="hotelIcon" onclick="showSection('hotel')">
                 <i class="fas fa-hotel icon-select"></i>
                 <span>Otel</span>
             </div>
@@ -241,9 +253,40 @@
 
         <!-- Bilet Ara Butonu -->
         <div class="button-container">
-            <button class="btn btn-warning" id="searchTicketBtn">Bilet Ara</button>
+            <button class="btn btn-warning" id="searchTicketBtn" onclick="search()">Bilet Ara</button>
         </div>
     </div>
+
+    <script>
+        let activeSection = '';
+
+        // Bölüm Gösterme Fonksiyonu
+        function showSection(section) {
+            document.getElementById('busSearchSection').style.display = 'none';
+            document.getElementById('hotelSearchSection').style.display = 'none';
+
+            if (section === 'bus') {
+                document.getElementById('busSearchSection').style.display = 'block';
+                activeSection = 'bus';
+            } else if (section === 'hotel') {
+                document.getElementById('hotelSearchSection').style.display = 'block';
+                activeSection = 'hotel';
+            }
+        }
+
+        // Arama Yapma Fonksiyonu
+        function search() {
+            if (activeSection === 'bus') {
+                window.location.href = 'Listele.cshtml';  // Redirect to bus listing page
+            } else if (activeSection === 'hotel') {
+                window.location.href = 'OtelListele.cshtml';  // Redirect to hotel listing page
+            } else {
+                alert('Lütfen bir seçenek seçin!');
+            }
+        }
+    </script>
+
+
 
     <!-- Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
@@ -318,7 +361,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
-        // Türkiye'deki şehirler listesi
         const cities = [
             "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
             "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa",
@@ -331,7 +373,6 @@
             "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
         ];
 
-        // Şehir arama ve öneri
         function filterCities(inputId) {
             const input = document.getElementById(`${inputId}Input`);
             const suggestionsDiv = document.getElementById(`${inputId}Suggestions`);
@@ -354,17 +395,15 @@
             }
         }
 
-        // Takvim tarih seçici
         $('#journeyDate').datepicker({
             format: 'dd/mm/yyyy',
             startDate: new Date(),
             todayBtn: "linked",
             autoclose: true,
-            container: 'body',  // Takvimi body'nin içine ekleyerek konumlandırılmasını sağla
+            container: 'body',
         });
 
-        // Şehirleri değiştirme
-        document.getElementById('swapCities').onclick = function() {
+        document.getElementById('swapCities').onclick = function () {
             const fromCity = document.getElementById('fromCityInput').value;
             const toCity = document.getElementById('toCityInput').value;
 
@@ -372,41 +411,101 @@
             document.getElementById('toCityInput').value = fromCity;
         };
 
-        // İkon seçimi
         const iconItems = document.querySelectorAll('.icon-item');
-        iconItems.forEach(item => {
-            item.onclick = function() {
-                iconItems.forEach(icon => icon.classList.remove('selected'));
-                this.classList.add('selected');
-            };
+        iconItems.forEach(icon => {
+            icon.addEventListener('click', () => {
+                iconItems.forEach(item => item.classList.remove('selected'));
+                icon.classList.add('selected');
+            });
         });
 
-        // Bilet Ara butonuna tıklama
-        document.getElementById('searchTicketBtn').onclick = function() {
+        document.getElementById('searchTicketBtn').onclick = function () {
             const fromCity = document.getElementById('fromCityInput').value;
             const toCity = document.getElementById('toCityInput').value;
             const journeyDate = document.getElementById('journeyDate').value;
+            const selectedIcon = document.querySelector('.icon-item.selected');
 
             if (!fromCity || !toCity || !journeyDate) {
-                alert('Lütfen tüm alanları doldurun.');
+                alert("Lütfen tüm alanları doldurun.");
                 return;
             }
 
-            alert(`Başlangıç: ${fromCity}\nVarış: ${toCity}\nTarih: ${journeyDate}`);
+            if (selectedIcon) {
+                const transportType = selectedIcon.querySelector('span').textContent;
+
+                // URL'ye parametre olarak şehirler, tarih ve taşıma tipini ekleyin
+                // Kullanıcıyı doğru sayfaya yönlendirin
+                const url = `/Custom/Listele?fromCity=${encodeURIComponent(fromCity)}&toCity=${encodeURIComponent(toCity)}&journeyDate=${encodeURIComponent(journeyDate)}&transportType=${encodeURIComponent(transportType)}`;
+                window.location.href = url;
+
+            }
         };
 
-        // Üye girişi ve kayıt formu
-        $('#loginForm').submit(function(e) {
-            e.preventDefault();
-            alert('Giriş başarılı!');
-            $('#authModal').modal('hide');
-        });
-
-        $('#registerForm').submit(function(e) {
-            e.preventDefault();
-            alert('Üyelik başarılı!');
-            $('#registerModal').modal('hide');
-        });
     </script>
+    <script>
+        let activeSection = '';
+
+        const cities = [
+            "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
+            "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa",
+            "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ",
+            "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
+            "Hatay", "Iğdır", "Isparta", "İstanbul", "İzmir", "Kahramanmaraş", "Karabük", "Karaman",
+            "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir", "Kocaeli", "Konya", "Kütahya",
+            "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu",
+            "Osmaniye", "Rize", "Sakarya", "Samsun", "Şanlıurfa", "Siirt", "Sinop", "Sivas", "Tekirdağ",
+            "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
+        ];
+
+        // Bölüm Gösterme Fonksiyonu
+        function showSection(section) {
+            document.getElementById('busSearchSection').style.display = 'none';
+            document.getElementById('hotelSearchSection').style.display = 'none';
+
+            if (section === 'bus') {
+                document.getElementById('busSearchSection').style.display = 'block';
+                activeSection = 'bus';
+            } else if (section === 'hotel') {
+                document.getElementById('hotelSearchSection').style.display = 'block';
+                activeSection = 'hotel';
+            }
+        }
+
+        // Şehir Filtresi Fonksiyonu
+        function filterCities(type) {
+            const input = type === 'fromCity' ? document.getElementById('fromCityInput') : document.getElementById('hotelCityInput');
+            const suggestions = type === 'fromCity' ? document.getElementById('fromCitySuggestions') : document.getElementById('hotelCitySuggestions');
+
+            const query = input.value.toLowerCase();
+            suggestions.innerHTML = '';
+
+            if (query.length > 0) {
+                const filteredCities = cities.filter(city => city.toLowerCase().startsWith(query));
+                filteredCities.forEach(city => {
+                    const div = document.createElement('div');
+                    div.textContent = city;
+                    div.classList.add('suggestion-item');
+                    div.onclick = () => {
+                        input.value = city;
+                        suggestions.innerHTML = '';
+                    };
+                    suggestions.appendChild(div);
+                });
+            }
+        }
+
+        // Arama Yapma Fonksiyonu
+        function search() {
+            if (activeSection === 'bus') {
+                window.location.href = 'Listele.cshtml';
+            } else if (activeSection === 'hotel') {
+                window.location.href = 'OtelListele.cshtml';
+            } else {
+                alert('Lütfen bir seçenek seçin!');
+            }
+        }
+    </script>
+
+
 </body>
 </html>

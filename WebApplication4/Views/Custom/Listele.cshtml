@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otobüs Biletleri</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .ticket-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .ticket-item {
+            background-color: #fff;
+            border-radius: 15px;
+            border: 2px solid #ddd;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .ticket-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .ticket-info {
+            flex: 1;
+        }
+
+        .ticket-info h5 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .ticket-info p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .ticket-info .price {
+            font-size: 16px;
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .btn-select {
+            background-color: #FFD700;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-select:hover {
+            background-color: #e1c93d;
+        }
+
+        /* Koltuk Seçim Penceresi */
+        .seat-selection-container {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Otobüs İçin Koltuk Düzeni */
+        .bus-layout {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .seat-btn {
+            font-size: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .seat-btn.selected {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .seat-btn:hover {
+            background-color: #e1e1e1;
+        }
+
+        /* Koltuk Düzeni */
+        .seat-left {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .seat-right {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Satın Al butonu */
+        .buy-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buy-button {
+            margin-top: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buy-button.show {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h4 class="text-center mt-5">Otobüs Biletleri</h4>
+
+        <div class="ticket-container">
+            <!-- Ticket 1 -->
+            <div class="ticket-item">
+                <div class="ticket-info">
+                    <h5>Metro Turizm</h5>
+                    <p>Başlangıç: İstanbul</p>
+                    <p>Varış: Ankara</p>
+                    <p>Kalkış Saati: 10:30</p>
+                    <p class="price">Fiyat: 250 TL</p>
+                </div>
+                <button class="btn-select" onclick="openSeatSelection(1)">Koltuk Seç</button>
+                <div class="seat-selection-container" id="seatSelectionContainer-1"></div>
+                <button class="buy-button show" id="buyButton-1" onclick="buyTickets(1)">Onayla ve Devam Et</button>
+            </div>
+
+            <!-- Ticket 2 -->
+            <div class="ticket-item">
+                <div class="ticket-info">
+                    <h5>Kamil Koç</h5>
+                    <p>Başlangıç: İzmir</p>
+                    <p>Varış: Antalya</p>
+                    <p>Kalkış Saati: 12:00</p>
+                    <p class="price">Fiyat: 300 TL</p>
+                </div>
+                <button class="btn-select" onclick="openSeatSelection(2)">Koltuk Seç</button>
+                <div class="seat-selection-container" id="seatSelectionContainer-2"></div>
+                <button class="buy-button show" id="buyButton-2" onclick="buyTickets(2)">Onayla ve Devam Et</button>
+            </div>
+
+            <!-- Ticket 3 -->
+            <div class="ticket-item">
+                <div class="ticket-info">
+                    <h5>Varan Turizm</h5>
+                    <p>Başlangıç: İstanbul</p>
+                    <p>Varış: Eskişehir</p>
+                    <p>Kalkış Saati: 14:45</p>
+                    <p class="price">Fiyat: 180 TL</p>
+                </div>
+                <button class="btn-select" onclick="openSeatSelection(3)">Koltuk Seç</button>
+                <div class="seat-selection-container" id="seatSelectionContainer-3"></div>
+                <button class="buy-button show" id="buyButton-3" onclick="buyTickets(3)">Onayla ve Devam Et</button>
+            </div>
+
+            <!-- Ticket 4 -->
+            <div class="ticket-item">
+                <div class="ticket-info">
+                    <h5>Varan Turizm</h5>
+                    <p>Başlangıç: Bursa</p>
+                    <p>Varış: Ankara</p>
+                    <p>Kalkış Saati: 17:00</p>
+                    <p class="price">Fiyat: 220 TL</p>
+                </div>
+                <button class="btn-select" onclick="openSeatSelection(4)">Koltuk Seç</button>
+                <div class="seat-selection-container" id="seatSelectionContainer-4"></div>
+                <button class="buy-button show" id="buyButton-4" onclick="buyTickets(4)">Onayla ve Devam Et</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function openSeatSelection(ticketId) {
+            const seatSelectionContainer = document.getElementById(`seatSelectionContainer-${ticketId}`);
+            seatSelectionContainer.innerHTML = ''; // Önceki koltukları temizle
+
+            const busLayout = document.createElement('div');
+            busLayout.classList.add('bus-layout');
+
+            for (let row = 1; row <= 10; row++) {
+                const seatRow = document.createElement('div');
+                seatRow.classList.add('seat-row');
+
+                const seatLeft = document.createElement('div');
+                seatLeft.classList.add('seat-left');
+                const seatButtonLeft = document.createElement('button');
+                seatButtonLeft.classList.add('seat-btn');
+                seatButtonLeft.innerHTML = `<i class="fas fa-couch"></i><br>${(row - 1) * 3 + 1}`;
+                seatButtonLeft.setAttribute('data-row', row);
+                seatButtonLeft.setAttribute('data-seat', 1);
+                seatButtonLeft.addEventListener('click', function () {
+                    this.classList.toggle('selected');
+                    toggleBuyButton(ticketId);
+                });
+                seatLeft.appendChild(seatButtonLeft);
+
+                const seatRight = document.createElement('div');
+                seatRight.classList.add('seat-right');
+                const seatButtonRight1 = document.createElement('button');
+                seatButtonRight1.classList.add('seat-btn');
+                seatButtonRight1.innerHTML = `<i class="fas fa-couch"></i><br>${(row - 1) * 3 + 2}`;
+                seatButtonRight1.setAttribute('data-row', row);
+                seatButtonRight1.setAttribute('data-seat', 2);
+                seatButtonRight1.addEventListener('click', function () {
+                    this.classList.toggle('selected');
+                    toggleBuyButton(ticketId);
+                });
+
+                const seatButtonRight2 = document.createElement('button');
+                seatButtonRight2.classList.add('seat-btn');
+                seatButtonRight2.innerHTML = `<i class="fas fa-couch"></i><br>${(row - 1) * 3 + 3}`;
+                seatButtonRight2.setAttribute('data-row', row);
+                seatButtonRight2.setAttribute('data-seat', 3);
+                seatButtonRight2.addEventListener('click', function () {
+                    this.classList.toggle('selected');
+                    toggleBuyButton(ticketId);
+                });
+
+                seatRight.appendChild(seatButtonRight1);
+                seatRight.appendChild(seatButtonRight2);
+
+                seatRow.appendChild(seatLeft);
+                seatRow.appendChild(seatRight);
+
+                busLayout.appendChild(seatRow);
+            }
+
+            seatSelectionContainer.appendChild(busLayout);
+            seatSelectionContainer.style.display = 'block';
+        }
+
+        function toggleBuyButton(ticketId) {
+            const selectedSeats = document.querySelectorAll(`#seatSelectionContainer-${ticketId} .seat-btn.selected`);
+            const buyButton = document.getElementById(`buyButton-${ticketId}`);
+            if (selectedSeats.length > 0) {
+                buyButton.disabled = false;
+            } else {
+                buyButton.disabled = true;
+            }
+        }
+
+        function buyTickets(ticketId) {
+            const selectedSeats = document.querySelectorAll(`#seatSelectionContainer-${ticketId} .seat-btn.selected`);
+
+            if (selectedSeats.length > 0) {
+                const seatIds = [];
+
+                selectedSeats.forEach(seat => {
+                    seatIds.push(seat.innerText.trim());
+                });
+
+                // Koltuk ID'lerini URL parametresi olarak gönder
+                window.location.href = `/Custom/satinAl/${ticketId}?seats=${seatIds.join(',')}`;
+            } else {
+                alert("Lütfen bir koltuk seçin.");
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -10,14 +10,35 @@ namespace WebApplication4.Controllers
         {
             return View(); // Bu action, Homepage.cshtml sayfasını döndürür
         }
-
-
-
-        // Hakkımızda action'ı (GET)
-        [HttpGet]
         public IActionResult Hakkimizda()
         {
-            return View("~/Views/Custom/hakkımızda.cshtml");
+            return View(); // Varsayılan olarak Views/Custom/hakkimizda.cshtml dosyasını arar
+        }
+
+
+        public ActionResult Listele(string fromCity, string toCity, string journeyDate)
+{
+    // Parametrelerle ilgili işlemleri burada yapabilirsiniz.
+    // Örnek: Veritabanından uygun biletleri listeleme
+    ViewBag.FromCity = fromCity;
+    ViewBag.ToCity = toCity;
+    ViewBag.JourneyDate = journeyDate;
+
+    return View();
+}
+        public IActionResult SatinAl(int ticketId, string seats)
+        {
+            // 'seats' parametresini kontrol ediyoruz.
+            if (string.IsNullOrEmpty(seats))
+            {
+                ViewData["message"] = "Henüz bir koltuk seçmediniz.";
+            }
+            else
+            {
+                ViewData["message"] = $"Seçilen Koltuklar: {seats}";
+            }
+
+            return View();
         }
 
     }
