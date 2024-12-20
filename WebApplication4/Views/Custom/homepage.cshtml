@@ -173,6 +173,86 @@
             height: auto;
             opacity: 0.8;
         }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .features-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #fff;
+            padding: 40px 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 30%;
+            background-color: #fafafa;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .feature-box:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+        .feature-icon {
+            font-size: 40px;
+            color: #007BFF;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .faq-section {
+            background-color: #fff;
+            padding: 40px 20px;
+            margin-top: 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+        }
+
+        .faq-question {
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .faq-answer {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 0 0 0;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -190,74 +270,92 @@
 
     <div class="container">
         <h4 class="text-center mt-4">Bilet Satın Alma İşlemi</h4>
+        
 
-        <!-- Otobüs Arama Bölümü -->
-        <div id="busSearchSection" style="display: none;">
-            <div class="city-select-container">
-                <input type="text" id="fromCityInput" class="city-select" placeholder="Başlangıç Şehri" onkeyup="filterCities('fromCity')" />
-                <div class="city-suggestions" id="fromCitySuggestions"></div>
+            <!-- Otobüs Arama Bölümü -->
+            <form id="busSearchSection" asp-action="Listele" asp-controller="Custom" method="POST" style="display: none;">
+                <div class="city-select-container">
+                    <input type="text" id="fromCityInput" class="city-select" name="fromCity" placeholder="Başlangıç Şehri" onkeyup="filterCities('fromCity')" required />
+                    <div class="city-suggestions" id="fromCitySuggestions"></div>
 
-                <div class="swap-btn">
-                    <i class="fas fa-exchange-alt" id="swapCities"></i>
+                    <div class="swap-btn">
+                        <i class="fas fa-exchange-alt" id="swapCities"></i>
+                    </div>
+
+                    <input type="text" id="toCityInput" class="city-select" name="toCity" placeholder="Varış Şehri" onkeyup="filterCities('toCity')" required />
+                    <div class="city-suggestions" id="toCitySuggestions"></div>
                 </div>
 
-                <input type="text" id="toCityInput" class="city-select" placeholder="Varış Şehri" onkeyup="filterCities('toCity')" />
-                <div class="city-suggestions" id="toCitySuggestions"></div>
-            </div>
+                <div class="container mt-5">
+                    <label for="journeyDate" class="form-label">Gidiş Tarihi</label>
+                    <input type="text" id="journeyDate" class="form-control" name="journeyDate" placeholder="Tarih Seçiniz"  required />
+                </div>
 
-            <div class="container mt-5">
-                <label for="journeyDate" class="form-label">Gidiş Tarihi</label>
-                <input type="text" id="journeyDate" class="form-control" placeholder="Tarih Seçiniz" readonly />
-            </div>
-        </div>
+                <!-- Otobüs için ayrı buton -->
+                <div class="button-container mt-3">
+                    <button type="submit" class="btn btn-warning">Otobüs Ara</button>
+                </div>
+            </form>
 
-        <!-- Otel Arama Bölümü -->
-        <div id="hotelSearchSection" style="display: none;">
-            <div class="city-select-container">
-                <input type="text" id="hotelCityInput" class="city-select" placeholder="Şehir Seçiniz" onkeyup="filterCities('hotelCity')" />
-                <div class="city-suggestions" id="hotelCitySuggestions"></div>
-            </div>
-
+            <!-- Otel Arama Bölümü -->
+            <form id="hotelSearchSection" asp-action="listeotel" asp-controller="Custom" method="POST" style="display: none;">
+                <div class="city-select-container">
+                    <input type="text" id="hotelCityInput" class="city-select" name="hotelCity" placeholder="Şehir Seçiniz" onkeyup="filterCities('hotelCity')" required />
+                    <div class="city-suggestions" id="hotelCitySuggestions"></div>
+                </div>
             <div class="container mt-5">
                 <label for="checkInDate" class="form-label">Giriş Tarihi</label>
-                <input type="text" id="checkInDate" class="form-control" placeholder="Giriş Tarihi Seçiniz" readonly />
+                <input type="date" id="checkInDate" class="form-control" name="checkInDate" placeholder="Giriş Tarihi Seçiniz" required />
             </div>
 
-            <div class="container mt-3">
+            <div class="container mt-5">
                 <label for="checkOutDate" class="form-label">Dönüş Tarihi</label>
-                <input type="text" id="checkOutDate" class="form-control" placeholder="Dönüş Tarihi Seçiniz" readonly />
+                <input type="date" id="checkOutDate" class="form-control" name="checkOutDate" placeholder="Dönüş Tarihi Seçiniz" required />
             </div>
 
-            <div class="container mt-3">
-                <label for="guestCount" class="form-label">Kişi Sayısı</label>
-                <input type="number" id="guestCount" class="form-control" placeholder="Kişi Sayısını Giriniz" min="1" />
-            </div>
 
-            <div class="container mt-3">
-                <label for="roomCount" class="form-label">Oda Sayısı</label>
-                <input type="number" id="roomCount" class="form-control" placeholder="Oda Sayısını Giriniz" min="1" />
+               
+
+                <!-- Otel için ayrı buton -->
+                <div class="button-container mt-3">
+                    <button type="submit" class="btn btn-primary">Otel Ara</button>
+                </div>
+            </form>
+
+            <!-- İkon Seçim Alanı -->
+            <div class="icon-select-container mt-4">
+                <div class="icon-item" id="busIcon" onclick="showSection('bus')">
+                    <i class="fas fa-bus icon-select"></i>
+                    <span>Otobüs</span>
+                </div>
+                <div class="icon-item" id="hotelIcon" onclick="showSection('hotel')">
+                    <i class="fas fa-hotel icon-select"></i>
+                    <span>Otel</span>
+                </div>
             </div>
         </div>
 
-        <!-- İkon Seçim Alanı -->
-        <div class="icon-select-container">
-            <div class="icon-item" id="busIcon" onclick="showSection('bus')">
-                <i class="fas fa-bus icon-select"></i>
-                <span>Otobüs</span>
-            </div>
-            <div class="icon-item" id="hotelIcon" onclick="showSection('hotel')">
-                <i class="fas fa-hotel icon-select"></i>
-                <span>Otel</span>
-            </div>
+
+    <div class="features-section">
+        <div class="feature-box">
+            <div class="feature-icon">📞</div>
+            <div class="feature-title">Müşteri Hizmetleri</div>
+            <div class="feature-description">7/24 destek için bizimle iletişime geçebilirsiniz.</div>
         </div>
 
-        <!-- Bilet Ara Butonu -->
-        <div class="button-container">
-            <button class="btn btn-warning" id="searchTicketBtn" onclick="search()">Bilet Ara</button>
+        <div class="feature-box">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-title">Güvenli Ödeme</div>
+            <div class="feature-description">Tüm ödemeleriniz SSL ile korunur.</div>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-icon">🌟</div>
+            <div class="feature-title">Seçkin Firmalar</div>
+            <div class="feature-description">Dünyanın en iyi seyahat ortaklarıyla çalışıyoruz.</div>
         </div>
     </div>
-
-    <script>
+    <script>    
         let activeSection = '';
 
         // Bölüm Gösterme Fonksiyonu
@@ -279,7 +377,7 @@
             if (activeSection === 'bus') {
                 window.location.href = 'Listele.cshtml';  // Redirect to bus listing page
             } else if (activeSection === 'hotel') {
-                window.location.href = 'OtelListele.cshtml';  // Redirect to hotel listing page
+                window.location.href = 'listeotel.cshtml';  // Redirect to hotel listing page
             } else {
                 alert('Lütfen bir seçenek seçin!');
             }
@@ -353,6 +451,25 @@
         </div>
     </div>
 
+    <div class="faq-section">
+        <div class="faq-title">Sıkça Sorulan Sorular</div>
+
+        <div class="faq-item">
+            <p class="faq-question">Seykoda hangi otobüs firmaları bulunuyor?</p>
+            <p class="faq-answer">Kamil Koç, Metro Turizm, Pamukkale, Ali Osman Ulusoy gibi Türkiye'nin dört bir yanına seferler düzenleyen yüzlerce otobüs firmasına ulaşabilirsiniz.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="faq-question">Seykodan otobüs biletimi nasıl alabilirim?</p>
+            <p class="faq-answer">Seykodan otobüs bileti satın almak için web sitemizi veya mobil uygulamalarımızı kullanabilirsiniz. Seyahat etmek istediğiniz yeri ve tarihi girdikten sonra tüm seferleri karşılaştırabilir, size uygun sefer için yolcu ve kart bilgilerinizi girerek biletinizi satın alabilirsiniz.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="faq-question">Seykodan otobüs bileti alırken komisyon ödenir mi?</p>
+            <p class="faq-answer">Seykodan komisyon ücreti almaz. Seyko kullanarak otobüs bileti alırken sadece biletinizin fiyatını ödersiniz.</p>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -362,7 +479,7 @@
 
     <script>
         const cities = [
-            "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
+            "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı","Aksaray", "Amasya", "Ankara", "Antalya", "Artvin",
             "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa",
             "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ",
             "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
@@ -505,6 +622,24 @@
             }
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    if (answer.style.display === 'block') {
+                        answer.style.display = 'none';
+                    } else {
+                        answer.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+
+
 
 
 </body>

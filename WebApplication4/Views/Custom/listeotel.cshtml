@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Otel Listesi";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Otel Listeleme Alanı -->
+<div id="hotelListContainer">
+    <h3>Otel Sonuçları</h3>
+    <div class="row" id="hotelList">
+        <!-- Otel 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://www.antalyaresorthotel.com/uploads/1/3/9/6/13965896/antalya-resort-hotel-original_1.jpg" class="card-img-top" alt="Otel 1">
+                <div class="card-body">
+                    <h5 class="card-title">Antalya Resort Hotel</h5>
+                    <p class="card-text">Şehir: Antalya</p>
+                    <p class="card-text">Fiyat: 500₺</p>
+                    <a href="#" class="btn btn-primary">Rezervasyon Yap</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Otel 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://www.karavansarayhotel.com/images/slider3.jpg" class="card-img-top" alt="Otel 2">
+                <div class="card-body">
+                    <h5 class="card-title">İzmir City Hotel</h5>
+                    <p class="card-text">Şehir: İzmir</p>
+                    <p class="card-text">Fiyat: 450₺</p>
+                    <a href="#" class="btn btn-primary">Rezervasyon Yap</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Otel 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://cdn.bodrum.com.tr/d/01/4bd9eebf-bf76-46b7-bba6-d301f8813584.jpg" class="card-img-top" alt="Otel 3">
+                <div class="card-body">
+                    <h5 class="card-title">Bodrum Seaside Hotel</h5>
+                    <p class="card-text">Şehir: Bodrum</p>
+                    <p class="card-text">Fiyat: 600₺</p>
+                    <a href="#" class="btn btn-primary">Rezervasyon Yap</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Otel 4 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://static.mlsbeds.com/media/1280x768/kappadokya1.jpg" class="card-img-top" alt="Otel 4">
+                <div class="card-body">
+                    <h5 class="card-title">Kapadokya Cave Hotel</h5>
+                    <p class="card-text">Şehir: Kapadokya</p>
+                    <p class="card-text">Fiyat: 550₺</p>
+                    <a href="#" class="btn btn-primary">Rezervasyon Yap</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Otel 5 -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Alanya_Harbour.jpg" class="card-img-top" alt="Otel 5">
+                <div class="card-body">
+                    <h5 class="card-title">Alanya Beach Hotel</h5>
+                    <p class="card-text">Şehir: Alanya</p>
+                    <p class="card-text">Fiyat: 450₺</p>
+                    <a href="#" class="btn btn-primary">Rezervasyon Yap</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- CSS -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    #hotelListContainer {
+        margin-top: 50px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 1rem;
+        border-radius: 5px;
+    }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+</style>

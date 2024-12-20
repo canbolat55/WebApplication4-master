@@ -26,6 +26,12 @@ namespace WebApplication4.Controllers
 
     return View();
 }
+        [HttpPost]
+        public IActionResult ListeOtel(string hotelCity, string checkInDate, string checkOutDate)
+        {
+            
+            return View();
+        }
         public IActionResult SatinAl(int ticketId, string seats)
         {
             // 'seats' parametresini kontrol ediyoruz.
